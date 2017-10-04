@@ -24,7 +24,14 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 RUN mkdir -p /etc/ssl/nginx
 
-RUN openssl req -new -nodes -x509 -subj "/C=US/ST=Minnesota/L=Minneapolis/O=ST/CN=localhost" -days 3650 -keyout /etc/ssl/nginx/server.key -out /etc/ssl/nginx/server.crt -extensions v3_ca
+# SSL Certificate Generation
+
+ADD ./v3.ext /tmp/v3.ext
+
+RUN openssl genrsa -out /tmp/rootCA.key 2048
+RUN openssl req -x509 -new -nodes -key /tmp/rootCA.key -sha256 -days 1024 -out /tmp/rootCA.pem -subj "/C=US/ST=Minnesota/L=Minneapolis/O=ST/CN=startribune.com"
+RUN openssl req -new -newkey rsa:2048 -sha256 -nodes -keyout /etc/ssl/nginx/server.key -subj "/C=US/ST=Minnesota/L=Minneapolis/O=ST/CN=startribune.com" -out device.csr
+RUN openssl x509 -req -in device.csr -CA /tmp/rootCA.pem -CAkey /tmp/rootCA.key -CAcreateserial -out /etc/ssl/nginx/server.crt -days 3650 -sha256 -extfile /tmp/v3.ext
 
 RUN apt-get install -y supervisor
 
