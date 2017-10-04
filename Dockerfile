@@ -22,6 +22,10 @@ ADD conf/nginx-vhost.conf /etc/nginx/conf.d/
 
 RUN rm /etc/nginx/conf.d/default.conf
 
+RUN mkdir -p /etc/ssl/nginx
+
+RUN openssl req -new -nodes -x509 -subj "/C=US/ST=Minnesota/L=Minneapolis/O=ST/CN=localhost" -days 3650 -keyout /etc/ssl/nginx/server.key -out /etc/ssl/nginx/server.crt -extensions v3_ca
+
 RUN apt-get install -y supervisor
 
 ADD conf/supervisord.conf /etc/supervisord.conf
