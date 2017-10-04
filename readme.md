@@ -15,6 +15,14 @@ This container includes some common conveniences. They are:
 * mcrypt PHP extension
 * sockets PHP extension
 
+## Using the prebuilt image
+
+To use the prebuilt image of this, just do:
+
+```
+docker pull 903601045739.dkr.ecr.us-east-2.amazonaws.com/nginx-php-fpm
+```
+
 ## Exposing an app without using docker-compose
 
 If you have a PHP application that you want to expose using this container, you can run it without having to write a Dockerfile or use docker-compose.
