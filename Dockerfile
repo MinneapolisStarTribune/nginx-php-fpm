@@ -1,5 +1,8 @@
 FROM php:7.1-fpm
 
+# Makes OS environment variables accessible to PHP, needed for compatiblity with Docker's preferred way of handling .env files
+RUN sed -e 's/;clear_env = no/clear_env = no/' -i /usr/local/etc/php-fpm.d/www.conf
+
 RUN echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list && \
     echo "deb-src http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list
 
