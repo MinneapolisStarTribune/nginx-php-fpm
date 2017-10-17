@@ -20,7 +20,7 @@ This container includes some common conveniences. They are:
 To use the prebuilt image of this, just do:
 
 ```
-docker pull 903601045739.dkr.ecr.us-east-2.amazonaws.com/nginx-php-fpm
+docker pull startribune/nginx-php-fpm
 ```
 
 ## Exposing an app without using docker-compose
